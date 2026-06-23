@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LoopSkill — the open registry of runnable agent artifacts</title>
+<meta name="description" content="Self-host a registry of skills, bundles, loops, and personalities for your AI agents. One command, zero signup, value in 60 seconds. Open-core. Spotify for AI agents." />
+<link rel="canonical" href="https://loopskill.io/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="LoopSkill — the open registry of runnable agent artifacts" />
+<meta property="og:description" content="Self-host a registry of skills, bundles, loops, and personalities for your AI agents. One command, zero signup, value in 60 seconds." />
+<meta property="og:url" content="https://loopskill.io/" />
+<meta property="og:image" content="https://loopskill.io/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#0a0a0f" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='none' stroke='%237c5cff' stroke-width='3'/><circle cx='16' cy='3' r='3' fill='%2300e5c0'/></svg>" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"LoopSkill","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Docker","offers":[{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Self-host (open source)"},{"@type":"Offer","price":"9.95","priceCurrency":"USD","name":"Pro hosted cloud"}],"description":"Open-core registry of runnable AI agent artifacts — skills, bundles, loops, and personalities.","url":"https://loopskill.io"}
+</script>
+<style>
+:root{
+  --bg:#0a0a0f; --bg2:#0f0f17; --panel:#13131d; --panel2:#171723;
+  --ink:#ecedf4; --mut:#9a9bb0; --mut2:#6c6d82; --line:#232433;
+  --vio:#7c5cff; --vio2:#9b80ff; --tea:#00e5c0; --amber:#ffb454;
+  --rad:14px; --max:1120px;
+  --mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.mono{font-family:var(--mono)}
+
+/* ambient mesh */
+.mesh{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(640px 420px at 78% -8%, rgba(124,92,255,.20), transparent 60%),
+    radial-gradient(560px 380px at 8% 8%, rgba(0,229,192,.10), transparent 60%),
+    radial-gradient(900px 600px at 50% 120%, rgba(124,92,255,.10), transparent 60%);}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.4;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:54px 54px;mask-image:radial-gradient(circle at 50% 30%,#000 0%,transparent 72%)}
+main,header,footer{position:relative;z-index:1}
+
+/* nav */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(10,10,15,.66);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:680;letter-spacing:-.02em;font-size:17px}
+.logo{width:26px;height:26px;flex:none}
+.navlinks{display:flex;gap:28px;align-items:center;font-size:14.5px;color:var(--mut)}
+.navlinks a:hover{color:var(--ink)}
+.ghbtn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:14px;font-weight:560;transition:.18s}
+.ghbtn:hover{border-color:#34354a;background:var(--panel2);transform:translateY(-1px)}
+.star{color:var(--amber)}
+@media(max-width:720px){.navlinks .hidem{display:none}}
+
+/* hero */
+.hero{padding:90px 0 70px;text-align:center}
+.kicker{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(124,92,255,.08);color:var(--vio2);font-size:13px;font-weight:560;margin-bottom:28px}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--tea);box-shadow:0 0 10px var(--tea)}
+h1{font-size:clamp(40px,6.4vw,72px);line-height:1.02;letter-spacing:-.035em;font-weight:720;max-width:14ch;margin:0 auto}
+h1 .g{background:linear-gradient(120deg,var(--vio2) 10%,var(--tea) 92%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:clamp(17px,2.1vw,20px);color:var(--mut);max-width:60ch;margin:26px auto 0;line-height:1.6}
+.sub b{color:var(--ink);font-weight:600}
+
+/* install line */
+.install{margin:38px auto 0;max-width:560px}
+.termcard{border:1px solid var(--line);border-radius:var(--rad);background:linear-gradient(180deg,var(--panel2),var(--panel));box-shadow:0 24px 70px -30px rgba(124,92,255,.5),0 1px 0 rgba(255,255,255,.04) inset;overflow:hidden}
+.termbar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.2)}
+.tdot{width:11px;height:11px;border-radius:50%}
+.tdot.r{background:#ff5f57}.tdot.y{background:#febc2e}.tdot.g{background:#28c840}
+.termbar .lbl{margin-left:8px;font-size:12px;color:var(--mut2);font-family:var(--mono)}
+.termbody{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 18px;font-family:var(--mono);font-size:15px}
+.termbody .cmd{color:var(--ink);text-align:left;white-space:nowrap;overflow-x:auto}
+.termbody .cmd .pr{color:var(--tea)}
+.termbody .cmd .fl{color:var(--mut2)}
+.copy{flex:none;display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);color:var(--mut);font-size:12.5px;font-family:var(--sans);cursor:pointer;transition:.15s}
+.copy:hover{color:var(--ink);border-color:#34354a}
+.copy.ok{color:var(--tea);border-color:rgba(0,229,192,.4)}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:11px;font-size:15px;font-weight:600;transition:.18s;border:1px solid transparent}
+.btn.primary{background:linear-gradient(120deg,var(--vio),var(--vio2));color:#fff;box-shadow:0 14px 34px -14px var(--vio)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 20px 44px -14px var(--vio)}
+.btn.ghost{border-color:var(--line);background:var(--panel);color:var(--ink)}
+.btn.ghost:hover{border-color:#34354a;background:var(--panel2);transform:translateY(-2px)}
+.heronote{margin-top:20px;font-size:13.5px;color:var(--mut2)}
+.heronote b{color:var(--mut)}
+
+/* section scaffolding */
+section{padding:78px 0}
+.eyebrow{font-size:13px;font-weight:640;letter-spacing:.08em;text-transform:uppercase;color:var(--vio2);text-align:center}
+h2{font-size:clamp(28px,4vw,42px);letter-spacing:-.03em;font-weight:680;text-align:center;margin-top:12px;max-width:18ch;margin-left:auto;margin-right:auto}
+.lead{color:var(--mut);text-align:center;max-width:58ch;margin:16px auto 0;font-size:17px}
+
+/* catalog cards */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.cards{grid-template-columns:1fr}}
+.card{position:relative;border:1px solid var(--line);border-radius:var(--rad);background:linear-gradient(180deg,var(--panel2),var(--panel));padding:24px 22px;transition:.2s;overflow:hidden}
+.card:hover{transform:translateY(-4px);border-color:#34354a}
+.card .ic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;margin-bottom:16px;border:1px solid var(--line)}
+.card h3{font-size:18px;font-weight:640;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.card p{color:var(--mut);font-size:14.5px;margin-top:9px;line-height:1.55}
+.tag{font-size:11px;font-weight:620;padding:3px 9px;border-radius:999px;letter-spacing:.02em}
+.tag.live{background:rgba(0,229,192,.12);color:var(--tea);border:1px solid rgba(0,229,192,.3)}
+.tag.soon{background:rgba(255,180,84,.10);color:var(--amber);border:1px solid rgba(255,180,84,.28)}
+
+/* wedge / runnable loops */
+.wedge{border:1px solid var(--line);border-radius:20px;background:
+  radial-gradient(700px 300px at 80% -20%,rgba(124,92,255,.16),transparent 60%),
+  linear-gradient(180deg,var(--panel2),var(--panel));padding:48px;margin-top:8px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+@media(max-width:860px){.wedge{grid-template-columns:1fr;padding:32px}}
+.wedge h2{text-align:left;margin:0;max-width:none}
+.wedge .eyebrow{text-align:left}
+.wedge p{color:var(--mut);font-size:16px;margin-top:16px}
+.codeblock{border:1px solid var(--line);border-radius:12px;background:#08080d;font-family:var(--mono);font-size:13px;line-height:1.75;padding:20px;overflow-x:auto;box-shadow:0 18px 50px -30px rgba(0,0,0,.8);white-space:pre;tab-size:2}
+.codeblock .k{color:var(--vio2)}.codeblock .s{color:var(--tea)}.codeblock .c{color:var(--mut2)}.codeblock .n{color:var(--amber)}
+
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{border:1px solid var(--line);border-radius:var(--rad);background:var(--panel);padding:26px 24px;position:relative}
+.step .num{font-family:var(--mono);font-size:13px;color:var(--vio2);border:1px solid var(--line);border-radius:8px;width:34px;height:34px;display:grid;place-items:center;margin-bottom:16px}
+.step h3{font-size:17px;font-weight:620}
+.step p{color:var(--mut);font-size:14.5px;margin-top:8px}
+
+/* pricing */
+.prices{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px;max-width:760px;margin-left:auto;margin-right:auto}
+@media(max-width:640px){.prices{grid-template-columns:1fr}}
+.price{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,var(--panel2),var(--panel));padding:32px 30px}
+.price.feat{border-color:rgba(124,92,255,.45);box-shadow:0 24px 70px -34px var(--vio)}
+.price .pname{font-size:15px;font-weight:640;color:var(--mut)}
+.price .amt{font-size:42px;font-weight:720;letter-spacing:-.03em;margin:10px 0 4px}
+.price .amt small{font-size:16px;color:var(--mut2);font-weight:500}
+.price ul{list-style:none;margin:22px 0 0;display:flex;flex-direction:column;gap:12px}
+.price li{display:flex;gap:11px;font-size:14.5px;color:var(--mut)}
+.price li b{color:var(--ink);font-weight:560}
+.chk{color:var(--tea);flex:none;margin-top:2px}
+.price .btn{width:100%;justify-content:center;margin-top:26px}
+
+/* final cta */
+.final{text-align:center;border:1px solid var(--line);border-radius:22px;background:
+  radial-gradient(600px 300px at 50% -30%,rgba(124,92,255,.22),transparent 60%),
+  linear-gradient(180deg,var(--panel2),var(--panel));padding:64px 32px}
+.final h2{max-width:20ch}
+.final .cta{margin-top:30px}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:44px 0;color:var(--mut2);font-size:14px;margin-top:30px}
+.frow{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.flinks{display:flex;gap:24px}
+.flinks a:hover{color:var(--ink)}
+.reveal{opacity:0;transform:translateY(16px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="mesh"></div><div class="grid-bg"></div>
+
+<header>
+  <div class="wrap"><nav>
+    <a class="brand" href="/">
+      <svg class="logo" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12.5" stroke="url(#g)" stroke-width="3"/><circle cx="16" cy="3.5" r="3.2" fill="#00e5c0"/><defs><linearGradient id="g" x1="3" y1="3" x2="29" y2="29"><stop stop-color="#9b80ff"/><stop offset="1" stop-color="#00e5c0"/></linearGradient></defs></svg>
+      LoopSkill
+    </a>
+    <div class="navlinks">
+      <a class="hidem" href="#catalog">Catalog</a>
+      <a class="hidem" href="#loops">Loops</a>
+      <a class="hidem" href="#how">Self-host</a>
+      <a class="hidem" href="#pricing">Pricing</a>
+      <a class="ghbtn" href="https://github.com/wisechef-ai/loopskill-api" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.3c-2.23.49-2.7-1.08-2.7-1.08-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.71 1.23 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.52.56.83 1.28.83 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+        <span>Star</span> <span class="star" id="starcount">★</span>
+      </a>
+    </div>
+  </nav></div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="wrap hero">
+    <span class="kicker"><span class="dot"></span> Open-core · self-hostable · MPL-2.0</span>
+    <h1>The open registry of <span class="g">runnable agent artifacts</span></h1>
+    <p class="sub">Spotify for AI agents. Browse, pull, and deploy <b>skills</b>, <b>bundles</b>, <b>loops</b>, and <b>personalities</b> to your fleet — Claude, Codex, Cursor, any MCP client. <b>Clone it, run one command, value in 60 seconds.</b> No signup.</p>
+
+    <div class="install">
+      <div class="termcard">
+        <div class="termbar"><span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span><span class="lbl">~/loopskill</span></div>
+        <div class="termbody">
+          <code class="cmd" id="cmd"><span class="pr">$</span> curl <span class="fl">-fsSL</span> loopskill.io/install <span class="fl">|</span> sh</code>
+          <button class="copy" id="copy" aria-label="Copy install command">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="5" width="9" height="9" rx="2"/><path d="M3 11V3a2 2 0 0 1 2-2h6"/></svg>
+            <span id="copytxt">Copy</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <a class="btn primary" href="#how">Self-host in 60s
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a class="btn ghost" href="https://github.com/wisechef-ai/loopskill-api" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+    <p class="heronote"><b>docker compose up</b> → a full registry on your machine. No credit card, no account, nothing phones home.</p>
+  </div>
+
+  <!-- CATALOG -->
+  <section id="catalog"><div class="wrap">
+    <p class="eyebrow reveal">One library, four artifact types</p>
+    <h2 class="reveal">Everything your agents pull from, in one place</h2>
+    <p class="lead reveal">Skills and bundles are config. Loops and personalities are <b>runnable</b> — the clone-to-wow artifacts no other registry has.</p>
+    <div class="cards">
+      <div class="card reveal">
+        <div class="ic" style="background:rgba(0,229,192,.08)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00e5c0" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4Z"/></svg></div>
+        <h3>Skill <span class="tag live">v1</span></h3>
+        <p>A single capability — SKILL.md plus scripts and references. Install once, your agent gains a new power.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic" style="background:rgba(0,229,192,.08)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00e5c0" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></div>
+        <h3>Bundle <span class="tag live">v1</span></h3>
+        <p>A curated set of skills you deploy and sync to a whole fleet at once. Version it, share it, roll it out.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic" style="background:rgba(124,92,255,.10)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9b80ff" stroke-width="1.8"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+        <h3>Personality <span class="tag live">v1</span></h3>
+        <p>A deployable persona — system prompt plus config. Give an agent a voice, a discipline, a way of working.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic" style="background:rgba(124,92,255,.10)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9b80ff" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
+        <h3>Loop <span class="tag live">v1</span></h3>
+        <p>A safety-bounded autonomous agent loop — success condition, verification, stopping criteria, budget. Run it unattended, safely.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- LOOP WEDGE -->
+  <section id="loops"><div class="wrap">
+    <div class="wedge reveal">
+      <div>
+        <p class="eyebrow">The white space</p>
+        <h2>A vetted registry of <span class="g" style="background:linear-gradient(120deg,#9b80ff,#00e5c0);-webkit-background-clip:text;background-clip:text;color:transparent">safety-bounded loops</span></h2>
+        <p>People hand-roll agentic loops and they spin out — runaway processes, $400 overnight bills. No vetted loop library exists. LoopSkill loops carry their safety envelope <b>before</b> you pull them: max turns, tool allow-list, a verification script, and explicit stopping criteria. Pull one, run it unattended, sleep soundly.</p>
+      </div>
+      <div class="codeblock"><span class="c"># pr-review-loop · loopskill.io/loops</span>
+<span class="k">success_condition</span>: <span class="s">"review comment posted"</span>
+<span class="k">verification</span>:  <span class="s">./verify.sh</span>
+<span class="k">max_turns</span>:     <span class="n">10</span>
+<span class="k">budget_usd</span>:    <span class="n">2.00</span>
+<span class="k">tool_allowlist</span>:
+  - <span class="s">github_read_pr</span>
+  - <span class="s">github_post_comment</span>
+<span class="k">stopping</span>:
+  success: <span class="s">comment_posted</span>
+  failure: <span class="s">max_turns</span>
+<span class="c"># ↑ the safety envelope, visible</span>
+<span class="c">#   before you ever run it</span></div>
+    </div>
+  </div></section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how"><div class="wrap">
+    <p class="eyebrow reveal">Self-host, the star engine</p>
+    <h2 class="reveal">From git clone to a running registry in 60 seconds</h2>
+    <p class="lead reveal">The whole product is open and runnable from a clone. The paid plan is convenience, never a feature gate.</p>
+    <div class="steps">
+      <div class="step reveal"><div class="num mono">01</div><h3>Clone &amp; run</h3><p><span class="mono" style="color:var(--tea)">docker compose up</span> — or the curl one-liner. Zero secrets, zero signup. A full registry boots on SQLite.</p></div>
+      <div class="step reveal"><div class="num mono">02</div><h3>Browse &amp; install</h3><p>A starter catalog of skills, bundles, loops, and personalities is seeded on first boot. Install one to your local agent over MCP.</p></div>
+      <div class="step reveal"><div class="num mono">03</div><h3>Deploy to your fleet</h3><p>Push a bundle to every agent you run and keep them in sync. Self-host forever, or let us run it for you.</p></div>
+    </div>
+  </div></section>
+
+  <!-- PRICING -->
+  <section id="pricing"><div class="wrap">
+    <p class="eyebrow reveal">Simple, honest pricing</p>
+    <h2 class="reveal">Free to self-host. Pay only for convenience.</h2>
+    <p class="lead reveal">Every feature is in the open-source repo. Pro is just “don’t run it yourself.”</p>
+    <div class="prices">
+      <div class="price reveal">
+        <div class="pname">Self-host</div>
+        <div class="amt">$0 <small>/ forever</small></div>
+        <ul>
+          <li><span class="chk">✓</span> <span>The <b>entire</b> product, open source (MPL-2.0)</span></li>
+          <li><span class="chk">✓</span> <span>Skills, bundles, loops, personalities — all of it</span></li>
+          <li><span class="chk">✓</span> <span>Deploy &amp; sync to your own fleet</span></li>
+          <li><span class="chk">✓</span> <span>Your data, your infra, nothing phones home</span></li>
+        </ul>
+        <a class="btn ghost" href="https://github.com/wisechef-ai/loopskill-api" target="_blank" rel="noopener">Clone the repo</a>
+      </div>
+      <div class="price feat reveal">
+        <div class="pname" style="color:var(--vio2)">Pro · hosted cloud</div>
+        <div class="amt">$9.95 <small>/ month</small></div>
+        <ul>
+          <li><span class="chk">✓</span> <span><b>We run it</b> — managed, updated, backed up</span></li>
+          <li><span class="chk">✓</span> <span>Managed sync across your fleet</span></li>
+          <li><span class="chk">✓</span> <span>Private registry for your own artifacts</span></li>
+          <li><span class="chk">✓</span> <span>Zero infra to maintain</span></li>
+        </ul>
+        <a class="btn primary" href="https://app.loopskill.io/signin">Start Pro</a>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- FINAL CTA -->
+  <section><div class="wrap">
+    <div class="final reveal">
+      <p class="eyebrow">Ship features while you sleep</p>
+      <h2>Give your agents a registry worth cloning</h2>
+      <div class="install" style="margin-top:30px">
+        <div class="termcard">
+          <div class="termbar"><span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span><span class="lbl">~/loopskill</span></div>
+          <div class="termbody">
+            <code class="cmd"><span class="pr">$</span> curl <span class="fl">-fsSL</span> loopskill.io/install <span class="fl">|</span> sh</code>
+            <button class="copy" data-copy aria-label="Copy install command">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="5" width="9" height="9" rx="2"/><path d="M3 11V3a2 2 0 0 1 2-2h6"/></svg><span>Copy</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/wisechef-ai/loopskill-api" target="_blank" rel="noopener">Star on GitHub</a>
+        <a class="btn ghost" href="#how">Read the docs</a>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="wrap frow">
+  <div class="brand" style="font-size:15px"><svg class="logo" style="width:22px;height:22px" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12.5" stroke="url(#g2)" stroke-width="3"/><circle cx="16" cy="3.5" r="3.2" fill="#00e5c0"/><defs><linearGradient id="g2" x1="3" y1="3" x2="29" y2="29"><stop stop-color="#9b80ff"/><stop offset="1" stop-color="#00e5c0"/></linearGradient></defs></svg> LoopSkill</div>
+  <div class="flinks">
+    <a href="https://github.com/wisechef-ai/loopskill-api" target="_blank" rel="noopener">GitHub</a>
+    <a href="#catalog">Catalog</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://app.loopskill.io">App</a>
+  </div>
+  <div>© 2026 LoopSkill · MPL-2.0</div>
+</div></footer>
+
+<script>
+(function(){
+  var CMD="curl -fsSL loopskill.io/install | sh";
+  document.querySelectorAll('.copy,[data-copy]').forEach(function(b){
+    b.addEventListener('click',function(){
+      navigator.clipboard.writeText(CMD).then(function(){
+        var t=b.querySelector('span'); var old=t?t.textContent:'';
+        b.classList.add('ok'); if(t)t.textContent='Copied';
+        setTimeout(function(){b.classList.remove('ok');if(t)t.textContent=old||'Copy';},1600);
+      });
+    });
+  });
+  // scroll reveal
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el,i){el.style.transitionDelay=(i%4*60)+'ms';io.observe(el);});
+  // live github stars (best-effort, graceful)
+  fetch('https://api.github.com/repos/wisechef-ai/loopskill-api').then(function(r){return r.json();}).then(function(d){
+    if(d&&typeof d.stargazers_count==='number'){var el=document.getElementById('starcount');if(el)el.textContent=d.stargazers_count;}
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>
