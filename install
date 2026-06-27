@@ -34,9 +34,16 @@ _print_ready() {
     printf '\n'
     printf '  Dev API key: %s\n' "${DEV_API_KEY}"
     printf '\n'
-    printf '  First command — list skills:\n'
-    printf '    curl http://localhost:%s/api/skills/search \\\n' "${API_PORT}"
-    printf '         -H "x-api-key: %s"\n' "${DEV_API_KEY}"
+    printf '  RUN your first loop (the part no other registry has) ->\n'
+    printf '  a vetted, safety-bounded loop, executed, objective pass/fail:\n'
+    printf '    curl -X POST http://localhost:%s/api/loops/hello-world-loop/run \\\n' "${API_PORT}"
+    printf '         -H "x-api-key: %s" \\\n' "${DEV_API_KEY}"
+    printf "         -H 'content-type: application/json' -d '{}'\n"
+    printf '  -> {"passed": true, "confinement": "bounded", ...}\n'
+    printf '\n'
+    printf '  Browse the catalog:\n'
+    printf '    curl http://localhost:%s/api/loops    -H "x-api-key: %s"\n' "${API_PORT}" "${DEV_API_KEY}"
+    printf '    curl http://localhost:%s/api/skills/search -H "x-api-key: %s"\n' "${API_PORT}" "${DEV_API_KEY}"
     printf '=================================================================\n'
     printf '\n'
 }

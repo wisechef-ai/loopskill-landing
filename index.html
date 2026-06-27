@@ -231,7 +231,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;color:var(--mut2);font-si
       <div class="card reveal">
         <div class="ic" style="background:rgba(124,92,255,.10)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9b80ff" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
         <h3>Loop <span class="tag live">v1</span></h3>
-        <p>A safety-bounded autonomous agent loop — success condition, verification, stopping criteria, budget. Run it unattended, safely.</p>
+        <p>A safety-bounded agent loop — success condition, verification, stopping criteria, budget. The registry <b>runs its verification and returns an objective pass/fail</b>, under enforced bounds.</p>
       </div>
     </div>
   </div></section>
@@ -242,7 +242,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;color:var(--mut2);font-si
       <div>
         <p class="eyebrow">The white space</p>
         <h2>A vetted registry of <span class="g" style="background:linear-gradient(120deg,#9b80ff,#00e5c0);-webkit-background-clip:text;background-clip:text;color:transparent">safety-bounded loops</span></h2>
-        <p>People hand-roll agentic loops and they spin out — runaway processes, $400 overnight bills. No vetted loop library exists. LoopSkill loops carry their safety envelope <b>before</b> you pull them: max turns, tool allow-list, a verification script, and explicit stopping criteria. Pull one, run it unattended, sleep soundly.</p>
+        <p>People hand-roll agentic loops and they spin out — runaway processes, $400 overnight bills. No vetted loop library exists. LoopSkill loops carry their safety envelope <b>before</b> you pull them: max turns, tool allow-list, a verification script, and explicit stopping criteria. And the registry doesn't just <i>store</i> that contract — it <b>runs the loop's verification and hands you an objective pass/fail</b>, inside the bounds. Pull a loop, run its check, trust the result.</p>
       </div>
       <div class="codeblock"><span class="c"># pr-review-loop · loopskill.io/loops</span>
 <span class="k">success_condition</span>: <span class="s">"review comment posted"</span>
@@ -267,8 +267,9 @@ footer{border-top:1px solid var(--line);padding:44px 0;color:var(--mut2);font-si
     <p class="lead reveal">The whole product is open and runnable from a clone. The paid plan is convenience, never a feature gate.</p>
     <div class="steps">
       <div class="step reveal"><div class="num mono">01</div><h3>Clone &amp; run</h3><p><span class="mono" style="color:var(--tea)">docker compose up</span> — or the curl one-liner. Zero secrets, zero signup. A full registry boots on SQLite.</p></div>
-      <div class="step reveal"><div class="num mono">02</div><h3>Browse &amp; install</h3><p>A starter catalog of skills, bundles, loops, and personalities is seeded on first boot. Install one to your local agent over MCP.</p></div>
-      <div class="step reveal"><div class="num mono">03</div><h3>Deploy to your fleet</h3><p>Push a bundle to every agent you run and keep them in sync. Self-host forever, or let us run it for you.</p></div>
+      <div class="step reveal"><div class="num mono">02</div><h3>Run a loop</h3><p><span class="mono" style="color:var(--tea)">POST /api/loops/hello-world-loop/run</span> — the registry executes the loop's verification under its bounds and hands back <span class="mono" style="color:var(--tea)">{"passed": true}</span>. The part no other registry has.</p></div>
+      <div class="step reveal"><div class="num mono">03</div><h3>Browse &amp; install</h3><p>A starter catalog of skills, bundles, loops, and personalities is seeded on first boot. Install one to your local agent over MCP.</p></div>
+      <div class="step reveal"><div class="num mono">04</div><h3>Deploy to your fleet</h3><p>Push a bundle to every agent you run and keep them in sync. Self-host forever, or let us run it for you.</p></div>
     </div>
   </div></section>
 
