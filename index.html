@@ -196,7 +196,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;color:var(--mut2);font-si
   <div class="wrap hero">
     <span class="kicker"><span class="dot"></span> Open-core · self-hostable · MPL-2.0</span>
     <h1>The open registry of <span class="g">runnable agent artifacts</span></h1>
-    <p class="sub">Spotify for AI agents. Browse, pull, and deploy <b>skills</b>, <b>bundles</b>, <b>loops</b>, and <b>personalities</b> to your fleet — Claude, Codex, Cursor, any MCP client. <b>Clone it, run one command, value in 60 seconds.</b> No signup.</p>
+    <p class="sub">Spotify for AI agents. Browse, pull, and deploy <b>skills</b>, <b>bundles</b>, <b>loops</b>, and <b>personalities</b> to your fleet. <b>Loops run on schedule — autonomous, verified, reporting outcomes while you sleep.</b> Claude, Codex, Cursor, any MCP client. Clone it, value in 60 seconds. No signup.</p>
 
     <div class="install">
       <div class="termcard">
@@ -247,7 +247,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;color:var(--mut2);font-si
       <div class="card reveal">
         <div class="ic" style="background:rgba(255,209,102,.10)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffe2a3" stroke-width="1.8"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg></div>
         <h3>Loop <span class="tag live">v1</span></h3>
-        <p>A safety-bounded agent loop — success condition, verification, stopping criteria, budget. The registry <b>runs its verification and returns an objective pass/fail</b>, under enforced bounds.</p>
+        <p>A safety-bounded agent loop — success condition, verification, stopping criteria, budget. <b>Schedule it on your fleet and it runs autonomously on cadence, reporting pass/fail outcomes via telemetry.</b> Or test once with a hosted run.</p>
       </div>
     </div>
   </div></section>
@@ -283,7 +283,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;color:var(--mut2);font-si
     <p class="lead reveal">The whole product is open and runnable from a clone. The paid plan is convenience, never a feature gate.</p>
     <div class="steps">
       <div class="step reveal"><div class="num mono">01</div><h3>Clone &amp; run</h3><p><span class="mono" style="color:var(--teal)">docker compose up</span> — or the curl one-liner. Zero secrets, zero signup. A full registry boots on SQLite.</p></div>
-      <div class="step reveal"><div class="num mono">02</div><h3>Run a loop</h3><p><span class="mono" style="color:var(--teal)">POST /api/loops/hello-world-loop/run</span> — the registry executes the loop's verification under its bounds and hands back <span class="mono" style="color:var(--teal)">{"passed": true}</span>. The part no other registry has.</p></div>
+      <div class="step reveal"><div class="num mono">02</div><h3>Deploy a loop to your fleet</h3><p>Loops are autonomous operating artifacts. Schedule one and your agents run it on cadence — fixing repos, triaging PRs, watching systems — reporting objective <span class="mono" style="color:var(--teal)">pass / fail</span> outcomes via telemetry. Or test once with <span class="mono" style="color:var(--teal)">POST /api/loops/{slug}/run</span> to verify the bounds first.</p></div>
       <div class="step reveal"><div class="num mono">03</div><h3>Browse &amp; install</h3><p>A starter catalog of skills, bundles, loops, and personalities is seeded on first boot. Install one to your local agent over MCP.</p></div>
       <div class="step reveal"><div class="num mono">04</div><h3>Deploy to your fleet</h3><p>Push a bundle to every agent you run and keep them in sync. Self-host forever, or let us run it for you.</p></div>
     </div>
