@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LoopSkill</title>
+<!--
+  Path-preserving redirector for every apex path GitHub Pages does not serve
+  from a file. loopskill.io/docs, /pricing and /llms.txt each returned a bare
+  404 for weeks; they now land on the same route at app.loopskill.io, which is
+  where those pages actually live.
+
+  The script runs first and carries pathname + query + hash across. The
+  <noscript> refresh can only reach the root — there is no path-aware
+  meta-refresh — so a no-JS visitor lands on the homepage rather than nowhere.
+
+  GitHub Pages serves this file with HTTP 404 no matter what it contains. That
+  is the ceiling of what Pages can do and the reason the DNS cutover to Caddy
+  (a real 301) is the durable fix.
+-->
+<script>
+  window.location.replace(
+    'https://app.loopskill.io' + window.location.pathname + window.location.search + window.location.hash
+  );
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=https://app.loopskill.io/" /></noscript>
+<meta name="robots" content="noindex, follow" />
+<style>
+  html { color-scheme: dark; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    background: #0a0a0a; color: #a3a3a3;
+    font: 15px/1.6 "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    text-align: center; padding: 24px;
+  }
+  a { color: #ffd166; }
+</style>
+</head>
+<body>
+  <p>
+    LoopSkill lives at <a href="https://app.loopskill.io/">app.loopskill.io</a>.<br />
+    Redirecting…
+  </p>
+</body>
+</html>
