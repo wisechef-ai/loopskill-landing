@@ -1,3 +1,10 @@
+# loopskill.io is a redirector. Everything lives at app.loopskill.io.
+#
+# Crawling stays ALLOWED on purpose: a crawler has to fetch these pages to see
+# the rel=canonical and the redirect and pass authority through to the app.
+# Disallow would hide the redirect and strand the apex's link equity here.
+# The pages themselves carry <meta name="robots" content="noindex, follow">.
 User-agent: *
 Allow: /
-Sitemap: https://loopskill.io/sitemap.xml
+
+Sitemap: https://app.loopskill.io/sitemap.xml
